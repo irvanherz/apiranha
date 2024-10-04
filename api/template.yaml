@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    CodeUri: ./
+    Timeout: 3
+    Runtime: nodejs20.x
+    Architectures:
+      - x86_64
+
+Resources:
+  ChromiumLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: chromium
+      Description: Chromium with Node.js integration for AWS Lambda
+      ContentUri: screenshot/chromium.layer
+      CompatibleRuntimes:
+        - nodejs20.x
+      CompatibleArchitectures:
+        - x86_64
+  ScreenshotUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handler.screenshotUrl
+      Events:
+        Login:
+          Type: Api
+          Properties:
+            Path: /api/screenshot-url
+            Method: post
+      Layers:
+      - !Ref ChromiumLayer
+      Timeout: 30
+      MemorySize: 768
+      Policies: 
+      - AmazonDynamoDBFullAccess
+      - AmazonS3FullAccess
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        External:
+        - "@sparticuz/chromium"
+        EntryPoints: 
+        - screenshot/handler.ts

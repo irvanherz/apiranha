@@ -1,0 +1,88 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  apiranha
+
+  Sample SAM Template for apiranha
+
+Parameters:
+  JwtSecretParameter:
+    Type: String
+    Description: "JWT Secret for signing tokens"
+
+Resources:
+  Api:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: api/template.yaml
+  Srv:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: srv/template.yaml
+      Parameters:
+        JwtSecret: !Ref JwtSecretParameter
+  # DynamoDB table for storing user data
+  ApiranhaTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: apiranha
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+        - AttributeName: gsi1pk
+          AttributeType: S
+        - AttributeName: gsi1sk
+          AttributeType: S
+        - AttributeName: gsi2pk
+          AttributeType: S
+        - AttributeName: gsi2sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: gsi1pk
+              KeyType: HASH
+            - AttributeName: gsi1sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: gsi2pk
+              KeyType: HASH
+            - AttributeName: gsi2sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  # S3 bucket for storing screenshots
+  ScreenshotsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: apiranha-screenshots  # Optional, if you don't specify, AWS will generate a unique name
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false  # Disable blocking of public ACLs
+        IgnorePublicAcls: false  # Ignore any public ACLs
+        BlockPublicPolicy: false  # Disable blocking of public policies
+        RestrictPublicBuckets: false  # Allow public buckets
+  ScreenshotsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ScreenshotsBucket
+      PolicyDocument:
+        Id: PublicReadPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub arn:aws:s3:::${ScreenshotsBucket}/*
+

@@ -1,0 +1,27 @@
+{
+  "name": "srv",
+  "version": "1.0.0",
+  "description": "srv",
+  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint '*.ts' --quiet --fix",
+    "init-layers": "cd ./api/screenshot/chromium.layer/nodejs && npm install",
+    "build": "sam build --build-in-source --cached --debug",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.2.0",
+    "@types/jest": "^29.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "dotenv-cli": "^7.4.2",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^29.2.1",
+    "prettier": "^2.5.1",
+    "ts-jest": "^29.0.5"
+  }
+}

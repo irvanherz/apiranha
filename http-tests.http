@@ -1,0 +1,101 @@
+### AUTH - REGISTER
+POST https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email": "johnie1@mail.com",
+  "username": "johnie1",
+  "password": "11111111"
+}
+
+
+### AUTH - LOGIN
+
+POST https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "john@mail.com",
+  "password": "11111111"
+}
+
+### USER - FIND USERS
+GET https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users HTTP/1.1
+
+###
+# Get user by id
+GET https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users/8a528aca-7b89-439a-83d9-13c482af43ce HTTP/1.1
+
+###
+# Create user
+POST https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email": "mail@gmail.com",
+  "username": "johndoe",
+  "password": "11111111"
+}
+
+###
+# Update user
+PUT https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users/8a528aca-7b89-439a-83d9-13c482af43ce HTTP/1.1
+Content-Type: application/json
+
+{
+  "fullName": "John Does"
+}
+
+
+###
+# Delete user
+DELETE https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users/8cb1d70a-4378-4fb3-8370-284b37ad5e8b HTTP/1.1
+
+
+###
+# Create apikey
+POST https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/api-keys HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "f5d452f2-0279-4c05-a6fe-82e528206164",
+  "name": "root"
+}
+
+###
+# Get api keys
+GET https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/api-keys HTTP/1.1
+
+###
+# Get user's api keys
+GET https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/users/f5d452f2-0279-4c05-a6fe-82e528206164/api-keys HTTP/1.1
+
+###
+# Get api key by id
+GET https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/api-keys/076e21e9-d511-4f73-ab24-ebe3197b5c55 HTTP/1.1
+
+###
+# Update apikey
+PUT https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/api-keys/076e21e9-d511-4f73-ab24-ebe3197b5c55 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Does"
+}
+
+
+###
+# Delete apikey
+DELETE https://3fx0vbu02c.execute-api.ap-southeast-1.amazonaws.com/Prod/api-keys/8cb1d70a-4378-4fb3-8370-284b37ad5e8b HTTP/1.1
+
+
+###
+
+POST https://prb8jpf4t7.execute-api.ap-southeast-1.amazonaws.com/Prod/api/screenshot-url HTTP/1.1
+Content-Type: application/json
+
+{
+  "url": "https://www.google.com"
+}
