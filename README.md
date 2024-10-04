@@ -101,10 +101,6 @@ Unit tests for Lambda functions can be written using your preferred testing fram
 sam local invoke <FunctionName>
 ```
 
-### Security
-
-Apiranha ensures security by requiring API keys for accessing the screenshot service and user APIs. It’s recommended to further enhance security by integrating AWS Cognito or IAM for access control and monitoring usage with AWS CloudWatch.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
